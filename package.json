@@ -13,6 +13,7 @@
   },
   "build": {
     "appId": "com.iconstudio.app",
+    "publish": null,
     "win": {
       "target": "nsis",
       "icon": "icon.ico"
