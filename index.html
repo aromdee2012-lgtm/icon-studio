@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Icon Studio</title>
+<style>
+:root {
+  --site-primary: #245b54;
+  --site-on-primary: #ffffff;
+  --site-secondary: #e6b86b;
+  --site-on-secondary: #282018;
+  --site-background: #edf2ee;
+  --site-on-background: #1d2926;
+  --site-font-body: "Leelawadee UI", Tahoma, sans-serif;
+  --site-font-heading: "Leelawadee UI", Tahoma, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; background-color: light-dark(var(--site-background), #17211f); color: light-dark(var(--site-on-background), #e7efeb); }
+header { background: var(--site-primary); color: var(--site-on-primary); padding: calc(22px * var(--site-spacing-scale)) max(22px, calc((100vw - 1120px)/2)); }
+.head { display:flex; align-items:center; gap:14px; }
+.logo { width:46px; height:46px; border-radius: calc(14px * var(--site-radius-scale)); display:grid; place-items:center; background:var(--site-secondary); color:var(--site-on-secondary); font-size:25px; }
+h1 { font-family:var(--site-font-heading); font-size:calc(27px * var(--site-heading-scale)); margin:0; letter-spacing:-.5px; }
+.sub { margin:5px 0 0; opacity:.82; font-size:14px; }
+main { max-width:1120px; margin:auto; padding:28px 20px 48px; }
+.intro { margin-bottom:22px; }
+.intro h2 { font-size:calc(21px * var(--site-heading-scale)); margin:0 0 5px; }
+.intro p { margin:0; opacity:.72; font-size:14px; }
+.workspace { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr); gap:20px; align-items:start; }
+.panel { background:light-dark(#ffffff,#222e2b); border:1px solid light-dark(#dce5df,#35443f); border-radius:calc(18px * var(--site-radius-scale)); padding:20px; box-shadow:0 8px 28px #183a3010; }
+.panel h3 { margin:0 0 15px; font-size:17px; }
+.canvas-wrap { width:min(100%,520px); margin:auto; padding:10px; border-radius:calc(14px * var(--site-radius-scale)); background:light-dark(#f1f4f1,#18211f); }
+.checker { background-color:#fff; background-image:linear-gradient(45deg,#d9dfdc 25%,transparent 25%),linear-gradient(-45deg,#d9dfdc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#d9dfdc 75%),linear-gradient(-45deg,transparent 75%,#d9dfdc 75%); background-size:24px 24px; background-position:0 0,0 12px,12px -12px,-12px 0; }
+canvas { width:100%; aspect-ratio:1; display:block; border-radius:8px; cursor:crosshair; touch-action:none; }
+.canvas-note { text-align:center; font-size:12px; opacity:.65; margin:10px 0 0; }
+.field { margin:15px 0; }
+.field label { display:flex; justify-content:space-between; gap:10px; font-size:13px; font-weight:650; margin-bottom:8px; }
+input[type=range] { width:100%; accent-color:var(--site-primary); }
+input[type=file] { display:none; }
+.upload { border:1.5px dashed light-dark(#aabdb4,#53665e); border-radius:calc(13px * var(--site-radius-scale)); padding:20px 14px; text-align:center; cursor:pointer; display:block; background:light-dark(#f6faf7,#1b2723); }
+.upload:hover { border-color:var(--site-primary); }
+.upload strong { display:block; margin:5px 0; }
+.upload small { opacity:.65; }
+.btnrow { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+button { border:0; border-radius:calc(10px * var(--site-radius-scale)); padding:11px 15px; font:600 13px var(--site-font-body); cursor:pointer; transition:.15s; }
+button:disabled { opacity:.4; cursor:not-allowed; }
+.primary { background:var(--site-primary); color:var(--site-on-primary); }
+.secondary { background:var(--site-secondary); color:var(--site-on-secondary); }
+.ghost { background:light-dark(#edf2ee,#34433d); color:light-dark(#263630,#e8f0eb); }
+button:not(:disabled):hover { filter:brightness(1.07); transform:translateY(-1px); }
+.swatch { width:30px; height:30px; border:2px solid #fff; border-radius:50%; display:inline-block; vertical-align:middle; box-shadow:0 0 0 1px #999; }
+.hint { font-size:12px; line-height:1.6; opacity:.7; margin:10px 0 0; }
+.status { min-height:20px; font-size:12px; color:light-dark(#245b54,#9bd5bf); margin-top:10px; }
+hr { border:0; border-top:1px solid light-dark(#e3eae5,#3a4943); margin:18px 0; }
+.preset { display:flex; gap:8px; flex-wrap:wrap; }
+.preset button { padding:8px 11px; }
+footer { text-align:center; font-size:12px; opacity:.55; padding:10px 0 26px; }
+@media(max-width:780px) { .workspace { grid-template-columns:1fr; } main { padding:22px 13px 35px; } .panel { padding:15px; } header { padding:17px 16px; } h1 { font-size:23px; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="head"><div class="logo">✦</div><div><h1>Icon Studio</h1><p class="sub">เครื่องมือแปลงภาพเป็นไอคอน TEXAS INTECH Innovation & Technology</p></div></div></header>
+<main>
+<div class="intro"><h2>สร้างไอคอนของคุณ</h2><p>เลือกรูปภาพ ลบพื้นหลัง แล้วจัดวางภาพให้พอดีกับกรอบไอคอน</p></div>
+<div class="workspace">
+<section class="panel">
+<h3>① ภาพตัวอย่าง</h3>
+<div class="canvas-wrap"><div class="checker"><canvas id="canvas" width="512" height="512" aria-label="พื้นที่ตัวอย่างไอคอน"></canvas></div></div>
+<p class="canvas-note">คลิกบนสีพื้นหลังในภาพเพื่อเลือกสีที่จะลบ · ลากบนภาพเพื่อลบด้วยแปรง</p>
+<div class="btnrow"><button class="ghost" id="fit">จัดภาพให้อยู่กลาง</button><button class="ghost" id="undo" disabled>↶ เลิกทำ</button><button class="ghost" id="reset">คืนภาพเดิม</button></div>
+<div class="status" id="status" aria-live="polite">เริ่มต้นด้วยการเลือกรูปภาพ</div>
+</section>
+<section class="panel">
+<h3>② นำเข้ารูปภาพ</h3>
+<label class="upload" for="file"><span style="font-size:27px">＋</span><strong>คลิกเพื่อเลือกรูปภาพ</strong><small>รองรับ JPG, PNG, WEBP</small></label><input id="file" type="file" accept="image/*">
+<hr>
+<h3>③ ลบพื้นหลัง</h3>
+<div class="field"><label>โหมดลบพื้นหลัง <span id="modeLabel">เลือกสีพื้นหลัง</span></label><div class="btnrow" style="margin-top:0"><button class="secondary" id="pick">หยดสีเลือกพื้นหลัง</button><button class="ghost" id="brush">ใช้แปรงลบ</button></div></div>
+<div class="field"><label for="tolerance">ความไวในการลบสี <span id="tolVal">35</span></label><input id="tolerance" type="range" min="1" max="150" value="35"><p class="hint">ค่ายิ่งมาก จะลบสีที่ใกล้เคียงกับสีที่เลือกได้กว้างขึ้น เหมาะกับพื้นหลังสีเรียบ</p></div>
+<div class="field"><label for="brushSize">ขนาดแปรงลบ <span id="brushVal">28 px</span></label><input id="brushSize" type="range" min="5" max="120" value="28"></div>
+<div class="btnrow"><button class="primary" id="remove" disabled>ลบสีพื้นหลังที่เลือก</button><button class="ghost" id="clearColor">ล้างสีที่เลือก</button></div>
+<hr>
+<h3>④ ปรับขนาดและตำแหน่ง</h3>
+<div class="field"><label for="zoom">ซูมภาพ <span id="zoomVal">100%</span></label><input id="zoom" type="range" min="25" max="220" value="100"></div>
+<div class="field"><label for="round">มุมกรอบไอคอน <span id="roundVal">0%</span></label><input id="round" type="range" min="0" max="48" value="0"></div>
+<div class="field"><label>พื้นหลังไฟล์ที่ส่งออก</label><div class="preset"><button class="secondary" data-bg="transparent">โปร่งใส</button><button class="ghost" data-bg="#ffffff">ขาว</button><button class="ghost" data-bg="#000000">ดำ</button></div></div>
+<div class="btnrow"><button class="primary" id="download" disabled>⬇ บันทึก PNG 512 × 512</button><button class="secondary" id="downloadIco" type="button">⬇ ส่งออก ICO สำหรับ Windows</button></div>
+<p class="hint">การลบสีเป็นระบบประมวลผลในเบราว์เซอร์ เหมาะกับพื้นหลังสีเรียบหรือสีที่แตกต่างจากตัวแบบชัดเจน ไม่ใช่ AI แยกวัตถุอัตโนมัติ</p>
+</section>
+</div>
+</main><footer>ประมวลผลภาพภายในอุปกรณ์ของคุณ · ไม่อัปโหลดรูปไปยังเซิร์ฟเวอร์</footer>
+</div>
+<script>
+(() => {
+const canvas=document.getElementById('canvas'), ctx=canvas.getContext('2d',{willReadFrequently:true});
+const $=id=>document.getElementById(id);
+let original=null, image=null, base=null, selected=null, zoom=100, offsetX=0, offsetY=0, bg='transparent', mode='pick', history=[], dragging=false, moved=false, last=null;
+const status=t=>$('status').textContent=t;
+function snapshot(){if(!base)return;history.push(new ImageData(new Uint8ClampedArray(base.data),base.width,base.height));if(history.length>12)history.shift();$('undo').disabled=false;}
+function restoreBase(){if(!original)return;base=new ImageData(new Uint8ClampedArray(original.data),512,512);history=[];$('undo').disabled=true;selected=null;draw();}
+function draw(){ctx.clearRect(0,0,512,512);ctx.save();const r=512*Number($('round').value)/100;ctx.beginPath();ctx.roundRect(0,0,512,512,r);ctx.clip();if(bg!=='transparent'){ctx.fillStyle=bg;ctx.fillRect(0,0,512,512);}if(base){const temp=document.createElement('canvas');temp.width=temp.height=512;temp.getContext('2d').putImageData(base,0,0);const z=zoom/100;ctx.translate(256+offsetX,256+offsetY);ctx.scale(z,z);ctx.drawImage(temp,-256,-256);}ctx.restore();}
+
+function render(){if(!original)return;draw();}
+function loadFile(file){if(!file||!file.type.startsWith('image/'))return;const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{image=img;zoom=100;offsetX=offsetY=0;$('zoom').value=100;$('zoomVal').textContent='100%';const temp=document.createElement('canvas');temp.width=temp.height=512;const t=temp.getContext('2d');const s=Math.min(512/img.width,512/img.height);t.drawImage(img,(512-img.width*s)/2,(512-img.height*s)/2,img.width*s,img.height*s);original=t.getImageData(0,0,512,512);base=new ImageData(new Uint8ClampedArray(original.data),512,512);history=[];$('undo').disabled=true;$('download').disabled=false;$('downloadIco').disabled=false;$('remove').disabled=false;selected=null;draw();status('นำเข้ารูปภาพแล้ว สามารถลบพื้นหลังและส่งออกเป็น PNG หรือ ICO ได้');URL.revokeObjectURL(url);};img.onerror=()=>status('ไม่สามารถเปิดไฟล์ภาพนี้ได้');img.src=url;}
+ $('file').addEventListener('change',e=>loadFile(e.target.files[0]));
+function pos(e){const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)*512/r.width,y=(e.clientY-r.top)*512/r.height;return {x:(x-256-offsetX)/(zoom/100)+256,y:(y-256-offsetY)/(zoom/100)+256};}
+function sample(x,y){if(!base)return;const i=(Math.max(0,Math.min(511,Math.round(y)))*512+Math.max(0,Math.min(511,Math.round(x))))*4;selected=[base.data[i],base.data[i+1],base.data[i+2]];$('modeLabel').textContent='สีที่เลือก';$('remove').disabled=false;status(`เลือกสี RGB(${selected.join(', ')}) แล้ว กด “ลบสีพื้นหลังที่เลือก”`);}
+function eraseAt(x,y){if(!base)return;const rad=Number($('brushSize').value)/2;for(let yy=Math.max(0,Math.floor(y-rad));yy<Math.min(512,Math.ceil(y+rad));yy++){for(let xx=Math.max(0,Math.floor(x-rad));xx<Math.min(512,Math.ceil(x+rad));xx++){if((xx-x)**2+(yy-y)**2<=rad*rad)base.data[(yy*512+xx)*4+3]=0;}}ctx.putImageData(base,0,0);}
+canvas.addEventListener('pointerdown',e=>{if(!image)return;const p=pos(e);if(mode==='pick'){sample(p.x,p.y);return;}dragging=true;moved=true;last=p;snapshot();canvas.setPointerCapture(e.pointerId);eraseAt(p.x,p.y);});
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;const p=pos(e);const dx=p.x-last.x,dy=p.y-last.y;const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/5));for(let i=1;i<=steps;i++)eraseAt(last.x+dx*i/steps,last.y+dy*i/steps);last=p;});
+canvas.addEventListener('pointerup',()=>{if(dragging){dragging=false;status('ลบพื้นหลังด้วยแปรงแล้ว');}});canvas.addEventListener('pointercancel',()=>dragging=false);
+$('pick').onclick=()=>{mode='pick';$('modeLabel').textContent='คลิกบนสีพื้นหลัง';status('คลิกบริเวณสีพื้นหลังบนภาพตัวอย่างเพื่อเลือกสี');};
+$('brush').onclick=()=>{mode='brush';$('modeLabel').textContent='แปรงลบ';status('ลากนิ้วหรือเมาส์บนภาพเพื่อระบายลบพื้นหลัง');};
+$('remove').onclick=()=>{if(!base||!selected)return; snapshot();const tol=Number($('tolerance').value),t2=tol*tol;const d=base.data;for(let i=0;i<d.length;i+=4){const dr=d[i]-selected[0],dg=d[i+1]-selected[1],db=d[i+2]-selected[2];if(dr*dr+dg*dg+db*db<=t2)d[i+3]=0;}ctx.putImageData(base,0,0);status('ลบสีพื้นหลังที่เลือกแล้ว หากยังเหลือขอบให้เพิ่มค่าความไวแล้วลบซ้ำ');};
+$('clearColor').onclick=()=>{selected=null;$('modeLabel').textContent='เลือกสีพื้นหลัง';status('ล้างสีที่เลือกแล้ว');};
+$('undo').onclick=()=>{if(history.length){base=history.pop();$('undo').disabled=!history.length;draw();status('ย้อนกลับหนึ่งขั้นแล้ว');}};
+$('reset').onclick=()=>{if(original){zoom=100;offsetX=offsetY=0;$('zoom').value=100;$('zoomVal').textContent='100%';restoreBase();status('คืนภาพต้นฉบับแล้ว');}};
+$('fit').onclick=()=>{zoom=100;offsetX=offsetY=0;$('zoom').value=100;$('zoomVal').textContent='100%';draw();};
+$('tolerance').oninput=e=>$('tolVal').textContent=e.target.value;$('brushSize').oninput=e=>$('brushVal').textContent=e.target.value+' px';
+$('zoom').oninput=e=>{zoom=Number(e.target.value);$('zoomVal').textContent=zoom+'%';draw();};$('round').oninput=e=>{$('roundVal').textContent=e.target.value+'%';draw();};
+document.querySelectorAll('[data-bg]').forEach(b=>b.onclick=()=>{bg=b.dataset.bg;draw();status(bg==='transparent'?'ตั้งค่าพื้นหลังโปร่งใส':'เลือกพื้นหลังสี '+bg+' แล้ว');});
+$('download').onclick=()=>{if(!base)return;const out=document.createElement('canvas');out.width=out.height=512;const c=out.getContext('2d');c.save();const r=512*Number($('round').value)/100;c.beginPath();c.roundRect(0,0,512,512,r);c.clip();if(bg!=='transparent'){c.fillStyle=bg;c.fillRect(0,0,512,512);}const temp=document.createElement('canvas');temp.width=temp.height=512;temp.getContext('2d').putImageData(base,0,0);c.translate(256+offsetX,256+offsetY);c.scale(zoom/100,zoom/100);c.drawImage(temp,-256,-256);c.restore();const a=document.createElement('a');a.download='my-icon-512.png';a.href=out.toDataURL('image/png');a.click();status('สร้างไฟล์ PNG ขนาด 512 × 512 แล้ว');};
+function makeExportCanvas(size){const out=document.createElement('canvas');out.width=out.height=size;const c=out.getContext('2d');const scale=size/512;c.save();const radius=512*Number($('round').value)/100;c.beginPath();c.roundRect(0,0,size,size,radius*scale);c.clip();if(bg!=='transparent'){c.fillStyle=bg;c.fillRect(0,0,size,size);}const temp=document.createElement('canvas');temp.width=temp.height=512;temp.getContext('2d').putImageData(base,0,0);c.translate((256+offsetX)*scale,(256+offsetY)*scale);c.scale(zoom/100*scale,zoom/100*scale);c.drawImage(temp,-256,-256);c.restore();return out;}
+$('downloadIco').onclick=()=>{if(!base){status('กรุณาเลือกรูปภาพก่อน แล้วจึงส่งออกเป็น ICO ได้');$('file').click();return;}const sizes=[16,32,48,64,128,256];try{status('กำลังสร้างไฟล์ ICO…');const frames=sizes.map(size=>{const data=makeExportCanvas(size).toDataURL('image/png').split(',')[1];const raw=atob(data);const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes;});const headerSize=6+sizes.length*16,total=headerSize+frames.reduce((sum,b)=>sum+b.length,0),file=new Uint8Array(total),view=new DataView(file.buffer);view.setUint16(0,0,true);view.setUint16(2,1,true);view.setUint16(4,sizes.length,true);let offset=headerSize;for(let i=0;i<sizes.length;i++){const p=6+i*16,s=sizes[i],bytes=frames[i];file[p]=s===256?0:s;file[p+1]=s===256?0:s;file[p+2]=0;file[p+3]=0;view.setUint16(p+4,1,true);view.setUint16(p+6,32,true);view.setUint32(p+8,bytes.length,true);view.setUint32(p+12,offset,true);file.set(bytes,offset);offset+=bytes.length;}const url=URL.createObjectURL(new Blob([file],{type:'image/x-icon'})),a=document.createElement('a');a.href=url;a.download='my-icon-windows.ico';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);status('ส่งออกไฟล์ .ICO สำเร็จแล้ว');}catch(err){console.error(err);status('ส่งออก ICO ไม่สำเร็จ: '+(err.message||'เกิดข้อผิดพลาด'));}};
+})();
+</script>
+</body>
+</html>

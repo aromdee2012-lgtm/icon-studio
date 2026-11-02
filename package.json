@@ -1,0 +1,29 @@
+{
+  "name": "icon-studio",
+  "productName": "IconStudio",
+  "version": "1.0.0",
+  "description": "Icon Studio App",
+  "main": "main.js",
+  "scripts": {
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.0"
+  },
+  "build": {
+    "appId": "com.iconstudio.app",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "icon.ico"
+    ],
+    "directories": {
+      "output": "dist"
+    }
+  }
+}
